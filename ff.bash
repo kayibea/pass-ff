@@ -30,9 +30,14 @@ fi
 
 file="$(
   find . -type f -name '*.gpg' -not -path '*/.*' -printf '%P\n' |
-    sed 's/\.gpg$//' | fzf -e --query="$query"
+    sed 's/\.gpg$//' |
+    sort |
+    fzf -e --query="$query"
 )"
 
-[[ -z "$file" ]] && exit 0
+[[ -z "$file" ]] && {
+  echo "Aborted !"
+  exit 0
+}
 
 pass "${pass_args[@]}" "$file"
