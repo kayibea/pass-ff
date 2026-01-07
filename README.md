@@ -48,7 +48,7 @@ pass ff edit
 
 Any existing or third-party `pass` extension works automatically, as long as it follows the normal `pass <subcommand> <entry>` pattern.
 
-Example using the [age](https://github.com/tijn/pass-age#) extension:
+Example using the [age](https://github.com/kayibea/pass-age.git) extension:
 
 ```bash
 pass ff age
