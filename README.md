@@ -17,8 +17,8 @@ Select a password entry interactively and forward it to any `pass` subcommand.
 
 ```bash
 mkdir -p ~/.password-store/.extensions
-cp ff ~/.password-store/.extensions/ff
-chmod +x ~/.password-store/.extensions/ff
+cp ff.bash ~/.password-store/.extensions/ff.bash
+chmod +x ~/.password-store/.extensions/ff.bash
 ```
 
 ---
