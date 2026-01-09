@@ -3,7 +3,10 @@ set -euo pipefail
 
 store="${PASSWORD_STORE_DIR:-$HOME/.password-store}"
 
-cd "$store"
+cd "$store" || {
+  echo "Failed to cd into password store ($store)" >&2
+  exit 1
+}
 
 command -v fzf >/dev/null 2>&1 || {
   echo "fzf not found, aborting." >&2
@@ -28,15 +31,25 @@ if [[ $# -gt 0 ]]; then
   done
 fi
 
+if command git rev-parse --is-inside-work-tree >/dev/null; then
+  preview_cmd='git --no-pager -c color.ui=always log --follow --stat --summary --patch-with-stat --name-status --find-renames=100% -- {}.gpg'
+else
+  preview_cmd='stat {}.gpg'
+fi
+
 file="$(
   find . -type f -name '*.gpg' -not -path '*/.*' -printf '%P\n' |
     sed 's/\.gpg$//' |
     sort |
-    fzf -e --query="$query"
+    fzf -e \
+      --query="$query" \
+      --ansi \
+      --preview="$preview_cmd" \
+      --preview-window=right:60%:wrap
 )"
 
 [[ -z "$file" ]] && {
-  echo "Aborted !"
+  echo "Aborted!"
   exit 0
 }
 
