@@ -31,7 +31,7 @@ if [[ $# -gt 0 ]]; then
   done
 fi
 
-if command git rev-parse --is-inside-work-tree >/dev/null; then
+if command git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
   preview_cmd='git --no-pager -c color.ui=always log --follow --stat --summary --patch-with-stat --name-status --find-renames=100% -- {}.gpg'
 else
   preview_cmd='stat {}.gpg'
