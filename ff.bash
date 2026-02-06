@@ -11,8 +11,8 @@ store="${PASSWORD_STORE_DIR:-$HOME/.password-store}"
 [[ -d "$store" ]] || die "password store not found: $store"
 cd "$store" || die "failed to cd into password store"
 
-command -v fzf >/dev/null 2>&1 || die "fzf not found in PATH"
-command -v pass >/dev/null 2>&1 || die "pass not found in PATH"
+command -v fzf &>/dev/null || die "fzf not found in PATH"
+command -v pass &>/dev/null || die "pass not found in PATH"
 
 query=""
 pass_args=()
@@ -39,8 +39,7 @@ files=$(
 
 file="$(
   printf '%s\n' "$files" | fzf -e \
-    --query="$query" \
-    --ansi
+    --query="$query"
 )" || exit 0
 
 [[ -n "$file" ]] || exit 0
